@@ -1,21 +1,20 @@
-import { Route, Routes } from "react-router-dom";
-import HomePage from "./Components/HomePage";
-import Status from "./Components/Status/Status";
-import StatusViewer from "./Components/Status/StatusViewer";
-import Signin from "./Components/Register/Signin";
-import Signup from "./Components/Register/Signup";
-
+import Login from './components/Registration/Login';
+import Signup from './components/Registration/Signup';
+import { Routes, Route } from "react-router-dom";
+import HomePage from './components/HomePage/HomePage';
+import Status from './components/Status/Status';
+import StoryViewer from './components/Status/StatusViewer';
 
 function App() {
   return (
-    <div >
+    <div className="">
+
       <Routes>
-          <Route path="/" element={<HomePage/>}></Route>
-          <Route path="/status" element={<Status/>}></Route>
-          <Route path="/status/:userId" element={<StatusViewer/>}></Route>
-          <Route path="/signin" element={<Signin/>}></Route>
-          <Route path="/signup" element={<Signup/>}></Route>
-          
+      <Route path="/" element={<HomePage/>}></Route>
+        <Route path="/signup" element={<Signup/>}></Route>
+        <Route path="/login" element={<Login/>}></Route>
+        <Route path="/status" element={<Status/>}></Route>
+        <Route path="/status/:id" element={<StoryViewer/>}></Route>
       </Routes>
       
     </div>

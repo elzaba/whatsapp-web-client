@@ -1,41 +1,43 @@
-import { BASE_API_URL } from "../../config/api";
+import { BASE_URL } from "../../Config/Api";
 import { CREATE_NEW_MESSAGE, GET_ALL_MESSAGE } from "./ActionType";
 
-export const createNewMessage=(messageData)=>async(dispatch)=>{
-    try {
-        const res = await fetch(`${BASE_API_URL}/api/messages/create`,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json",
-                Authorization:`Bearer ${messageData.token}`
-            },
-            body:JSON.stringify(messageData.data)
-        })
-
-        const data = await res.json();
-        console.log("create message ", data)
-        dispatch({type:CREATE_NEW_MESSAGE,payload:data})
-        
-    } catch (error) {
-        console.log("catch error ", error)
+//create new message
+export const createNewMessage = (data) => async (dispatch) => {
+  const res = await fetch(
+    `${BASE_URL}/messages/create`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${data.token}`,
+      },
+      body: JSON.stringify({
+        content: data.content,
+        chatId: data.chatId,
+      }),
     }
-}
+  );
+  const newMessage = await res.json();
+ console.log("new messages - ",newMessage)
 
-export const getAllMessages=(reqData)=>async(dispatch)=>{
-    try {
-        const res = await fetch(`${BASE_API_URL}/api/messages/chat/${reqData.chatId}`,{
-            method:"GET",
-            headers:{
-                "Content-Type":"application/json",
-                Authorization:`Bearer ${reqData.token}`
-            },
-        })
+  dispatch({ type: CREATE_NEW_MESSAGE, payload: newMessage });
+  return newMessage;
+};
 
-        const data = await res.json();
-        console.log("get all message ", data)
-        dispatch({type:GET_ALL_MESSAGE,payload:data})
-        
-    } catch (error) {
-        console.log("catch error ", error)
+//get all message
+export const getAllMessage = (data) => async (dispatch) => {
+ 
+  const res = await fetch(
+    `${BASE_URL}/messages/chat/${data.chatId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${data.token}`,
+      },
     }
-}
+  );
+  const messages = await res.json();
+
+  dispatch({ type: GET_ALL_MESSAGE, payload: messages });
+};
